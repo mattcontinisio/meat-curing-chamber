@@ -1,0 +1,11 @@
+*.log
+*.out
+*.csv
+
+__pycache__
+/bazel-*
+_build*
+
+.env
+
+.vscode

@@ -1,0 +1,12 @@
+rooms = bedroom, kitchen
+sensors = dht
+services = humidity_controller, temperature_controller
+
+
+topics
+--
+home/bedroom/temperature
+home/bedroom/humidity
+
+home/kitchen/fridge/temperature
+home/kitchen/fridge/humidity
