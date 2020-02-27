@@ -80,6 +80,8 @@ def main():
     config_schema.validate(config._sections)
 
     location = config.get('mqtt', 'location', fallback='unknown')
+    humidity_topic = '/'.join((location, 'humidity'))
+    temperature_topic = '/'.join((location, 'temperature'))
 
     # Create sensor
     sensor_type = config.getint('dht', 'type')
@@ -112,10 +114,7 @@ def main():
             'publishing humidity={} and temperature={} for location={}'.format(
                 reading.humidity, reading.temperature, location))
 
-        humidity_topic = '/'.join((location, '/humidity'))
         client.publish(humidity_topic, reading.humidity)
-
-        temperature_topic = '/'.join((location, '/temperature'))
         client.publish(temperature_topic, reading.temperature)
 
     read()

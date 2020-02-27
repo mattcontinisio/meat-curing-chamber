@@ -30,6 +30,8 @@ def main():
         logger.warn('failed to read config file, path={}'.format(args.config))
 
     location = config.get('mqtt', 'location', fallback='unknown')
+    humidity_topic = '/'.join((location, 'humidity'))
+    temperature_topic = '/'.join((location, 'temperature'))
 
     filename = 'readings-{}.csv'.format(time.time())
     with open(filename, 'w', newline='') as csv_file:
@@ -60,10 +62,7 @@ def main():
     client = mqtt.Client()
     client.on_connect = on_connect
 
-    humidity_topic = '/'.join((location, '/humidity'))
     client.message_callback_add(humidity_topic, on_humidity)
-
-    temperature_topic = '/'.join((location, '/temperature'))
     client.message_callback_add(temperature_topic, on_temperature)
 
     host = config.get('mqtt', 'broker_host', fallback='localhost')

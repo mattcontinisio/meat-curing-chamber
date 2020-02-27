@@ -36,6 +36,8 @@ def main():
         logger.warn('failed to read config file, path={}'.format(args.config))
 
     location = config.get('mqtt', 'location', fallback='unknown')
+    humidity_topic = '/'.join((location, 'humidity'))
+    temperature_topic = '/'.join((location, 'temperature'))
 
     start_http_server(config.getint('metrics', 'http_port', fallback=8000))
 
@@ -56,13 +58,8 @@ def main():
 
     client = mqtt.Client()
     client.on_connect = on_connect
-
-    humidity_topic = '/'.join((location, '/humidity'))
     client.message_callback_add(humidity_topic, on_humidity)
-
-    temperature_topic = '/'.join((location, '/temperature'))
     client.message_callback_add(temperature_topic, on_temperature)
-
     host = config.get('mqtt', 'broker_host', fallback='localhost')
     port = config.getint('mqtt', 'broker_port', fallback=1883)
     client.connect(host, port)
