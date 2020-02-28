@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 
 import mqtt from 'mqtt';
 
-const brokerAddress = 'ws://192.168.1.115:9001'
-const location = 'home/kitchen/fridge';
+const brokerAddress = 'ws://192.168.1.115:9001';
 
 interface SensorDisplayState {
-  humidity: number;
-  temperature: number;
+  selectedLocation: string; // 'home/bedroom' | 'home/kitchen/fridge'
+  locations: {
+    [key: string]: {
+      humidity: number;
+      temperature: number;
+    };
+  };
 }
 
 export default class SensorDisplay extends Component<{}, SensorDisplayState> {
@@ -16,38 +20,89 @@ export default class SensorDisplay extends Component<{}, SensorDisplayState> {
   constructor(props: {}, context?: any) {
     super(props, context);
     this.state = {
-      humidity: 0,
-      temperature: 0,
+      selectedLocation: 'home/bedroom',
+      locations: {
+        'home/bedroom': {
+          humidity: 0,
+          temperature: 0
+        },
+        'home/kitchen/fridge': {
+          humidity: 0,
+          temperature: 0
+        }
+      }
     };
 
     this.client = mqtt.connect(brokerAddress);
     this.client.on('connect', () => {
-      const topic = [location, '#'].join('/');
+      const topic = ['home', '#'].join('/');
       console.log('subscribing', { topic });
-      this.client.subscribe(topic, (err) => {
+      this.client.subscribe(topic, err => {
         if (err) {
-          console.error('failed to subscribe', err)
+          console.error('failed to subscribe', err);
         }
       });
 
       this.client.on('message', (topic, message) => {
         console.log('got message', topic, message.toString());
-        if (topic === [location, 'humidity'].join('/')) {
-          this.setState({ humidity: +message.toString() });
-        } else if (topic === [location, 'temperature'].join('/')) {
-          this.setState({ temperature: +message.toString() });
+        const topicParts = topic.split('/');
+        const location = topicParts.slice(0, -1).join('/');
+        if (!(location in this.state.locations)) {
+          console.warn('Unknown location', location);
+          return;
+        }
+
+        const humidityOrTemperature = topicParts[topicParts.length - 1];
+        if (humidityOrTemperature === 'humidity') {
+          this.setState(state => {
+            state.locations[location].humidity = +message.toString();
+            return state;
+          });
+        } else if (humidityOrTemperature === 'temperature') {
+          this.setState(state => {
+            state.locations[location].temperature = +message.toString();
+            return state;
+          });
         } else {
-          console.warn('Unexpected topic', topic);
+          console.warn('Unexpected');
         }
       });
-    })
+    });
+  }
+
+  handleChangeLocation(event: React.ChangeEvent<HTMLSelectElement>) {
+    this.setState({ selectedLocation: event.target.value });
   }
 
   render() {
     return (
       <div className="SensorDisplay">
-        <p>humidity: {+this.state.humidity.toFixed(2)}</p>
-        <p>temperature: {+this.state.temperature.toFixed(2)}</p>
+        <label>
+          location
+          <select
+            value={this.state.selectedLocation}
+            onChange={this.handleChangeLocation.bind(this)}
+          >
+            <option value="home/bedroom">home/bedroom</option>
+            <option value="home/kitchen/fridge">home/kitchen/fridge</option>
+          </select>
+        </label>
+        <p>
+          humidity:{' '}
+          {
+            +this.state.locations[this.state.selectedLocation].humidity.toFixed(
+              2
+            )
+          }
+        </p>
+        <p>
+          temperature:{' '}
+          {
+            +this.state.locations[
+              this.state.selectedLocation
+            ].temperature.toFixed(2)
+          }
+        </p>
       </div>
     );
   }

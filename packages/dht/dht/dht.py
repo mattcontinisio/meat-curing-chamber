@@ -36,6 +36,14 @@ class DhtSensor:
 
         return SensorReading(humidity, temperature)
 
+    def read_retry(self, retries=2):
+        humidity, temperature = Adafruit_DHT.read_retry(
+            self.sensor_type, self.pin, retries)
+        if humidity is None or temperature is None:
+            logger.error('Could not read humidity or temperature')
+
+        return SensorReading(humidity, temperature)
+
 
 def main():
     ch = logging.StreamHandler()
@@ -106,7 +114,7 @@ def main():
 
     def read():
         scheduler.enter(read_interval, 1, read)
-        reading = sensor.read()
+        reading = sensor.read_retry()
         if not reading.is_valid():
             return
 

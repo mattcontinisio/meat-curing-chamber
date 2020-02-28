@@ -16,12 +16,20 @@ The meat curing chamber is made up of different services and an MQTT message bro
 
   `{location}` is configurable. For example, `fridge.ini` sets it to `home/kitchen/fridge`.
 
-* humidity_controller - The `humidity_controller` service subscribes to the `{location}/humidity` and turns a humidifier on/off based on a configurable humidity range. It uses an [RF433Mhz transmitter](https://www.electrodragon.com/product/433m-rf-wireless-transmitter-module/) to do this.  The humidifer is plugged into a [remote control outlet](https://www.etekcity.com/product/100068), which the RF433Mhz transmitter can turn on and off. There is a python and C++ version.
+* humidity_controller - The `humidity_controller` service subscribes to the `{location}/humidity` topic and turns a humidifier on/off based on a configurable humidity range. It uses an [RF433Mhz transmitter](https://www.electrodragon.com/product/433m-rf-wireless-transmitter-module/) to do this.  The humidifer is plugged into a [remote control outlet](https://www.etekcity.com/product/100068), which the RF433Mhz transmitter can turn on and off. There is a python and C++ version.
 
-* temperature_controller - The `temperature_controller` service does the same thing as the `humidity_controller` but uses the `{location}/temperature` topic instead and controls a remote controler outlet that the fridge is plugged into. There is a python and C++ version.
+* temperature_controller - The `temperature_controller` service does the same thing as the `humidity_controller` but uses the `{location}/temperature` topic instead and controls a remote control outlet that the fridge is plugged into. There is a python and C++ version.
 
 ### Other services
 
 * csv_writer
 * metrics
 * slack
+
+### Monitoring
+
+Monitoring is a work in progress. The following packages are simple examples that show different approaches to monitoring.
+
+* metrics - The `metrics` service shows how [Prometheus](https://prometheus.io/) can be used for monitoring. The service uses the [Prometheus python client](https://github.com/prometheus/client_python) to expose gauges for humidity and temperature.
+
+* monitor-web - The `monitor-web` package is a [React](https://reactjs.org/) web app that displays the current humidity and temperature for each location. This also shows how [MQTT.js](https://github.com/mqttjs/MQTT.js) can be used in the browser.

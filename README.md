@@ -11,6 +11,7 @@ See [documentation](./doc/design.md) for more info.
 * csv_writer (Python) - Writes humidity and temperature data to CSV file
 * dht (Python) - Publishes humidity and temperature data from Adafruit DHT series sensors
 * metrics (Python) - Exposes metrics with Prometheus
+* monitor-web (JS) - Web app that displays humidity and temperature
 * rf433-cpp (C++) - Operates 433hz devices, used to turn on/off humidifier and fridge
 * rf433-py (Python) - Operates 433hz devices, used to turn on/off humidifier and fridge
 * slack (Python) - Posts messages to slack channel
@@ -45,6 +46,20 @@ There is also a build script for convenience.
 
     # Creates _build_release_gcc_make folder
     ./scripts/build_cpp.sh release gcc make
+
+### monitor-web
+
+monitor-web is a [React](https://reactjs.org/) web app that displays the current humidity and temperature data.
+
+    cd packages/monitor-web
+
+    # Run app in development mode
+    yarn start
+
+    # Build app for produciton
+    yarn build
+
+See the [Readme](./packages/monitor-web/README.md) for more info.
 
 ### Bazel
 
