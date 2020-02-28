@@ -57,6 +57,8 @@ int main(int argc, char* argv[]) {
 
     miot::mqtt_client client{broker_address, client_id, topics};
 
+    spdlog::info("mqtt client connected, client_id={}, location={}", client_id, location);
+
     while (true) {
         spdlog::info("waiting for message");
         const auto msg = client.consume_message();
@@ -72,12 +74,12 @@ int main(int argc, char* argv[]) {
             spdlog::info("temperature={}", msg->to_string());
             const auto temperature = std::stof(msg->to_string());
             if (temperature < temperature_range.first) {
-                spdlog::info("temperature is too low, turning off fridge");
                 const auto code = config.GetInteger("rf433", "turn_off_fridge_code", -1);
+                spdlog::info("temperature is too low, turning off fridge with code={}", code);
                 rcSwitch.send(code, 24);
             } else if (temperature > temperature_range.second) {
-                spdlog::info("temperature is too high, turning on fridge");
                 const auto code = config.GetInteger("rf433", "turn_on_fridge_code", -1);
+                spdlog::info("temperature is too high, turning on fridge with code={}", code);
                 rcSwitch.send(code, 24);
             }
         } else {

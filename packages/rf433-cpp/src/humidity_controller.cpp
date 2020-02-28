@@ -57,6 +57,8 @@ int main(int argc, char* argv[]) {
 
     miot::mqtt_client client{broker_address, client_id, topics};
 
+    spdlog::info("mqtt client connected, client_id={}, location={}", client_id, location);
+
     while (true) {
         spdlog::info("waiting for message");
         const auto msg = client.consume_message();
@@ -72,12 +74,12 @@ int main(int argc, char* argv[]) {
             spdlog::info("humidity={}", msg->to_string());
             const auto humidity = std::stof(msg->to_string());
             if (humidity < humidity_range.first) {
-                spdlog::info("humidity is too low, turning on humidifier");
                 const auto code = config.GetInteger("rf433", "turn_on_humidifier_code", -1);
+                spdlog::info("humidity is too low, turning on humidifier with code={}", code);
                 rcSwitch.send(code, 24);
             } else if (humidity > humidity_range.second) {
-                spdlog::info("humidity is too high, turning off humidifier");
                 const auto code = config.GetInteger("rf433", "turn_off_humidifier_code", -1);
+                spdlog::info("humidity is too high, turning off humidifier with code={}", code);
                 rcSwitch.send(code, 24);
             }
         } else {
