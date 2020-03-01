@@ -8,7 +8,15 @@ todo
 
 ![alt text](./architecture.png "Architecture")
 
-The meat curing chamber is made up of different services and an MQTT message broker.
+The meat curing chamber is made up of different services and an MQTT message broker. Currently, only two topics are used:
+  * `{location}/humidity`
+  * `{location}/temperature`
+
+where `{location}` represents where the sensor is, such as `home/bedroom`. Services can either publish or subscribe to these topics. In the future, this topic structure can be expanded, but for simple applications like controlling/monitoring temperature and humidity, this topic structure is a good start.
+
+Services can also be configured to run for other purposes other than a meat curing chamber. For example, you can run `dht` and `humidity_controller` without a `temperature_controller` if you just want to control a humidifier.
+
+### Services
 
 * dht - The `dht` service reads humidity and temperature data from a [DHT22 sensor](https://www.adafruit.com/product/385) and publishes the data to the topics:
     * `{location}/humidity`
