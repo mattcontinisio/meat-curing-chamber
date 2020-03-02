@@ -2,7 +2,12 @@
 
 ## Hardware
 
-todo
+![alt text](./hardware_setup.png "Hardware setup")
+
+* The fridge is plugged into a [remote control outlet](https://www.etekcity.com/product/100068), which a RF433Mhz transmitter can turn on and off.
+* A humidifier is plugged into a remote control outlet and sits inside the fridge.
+* A [DHT22 sensor](https://www.adafruit.com/product/385) is connected to the Raspberry Pi and sits inside the fridge to read humidity and temperature data.
+* An [RF433Mhz transmitter](https://www.electrodragon.com/product/433m-rf-wireless-transmitter-module/) is connected to the Raspberry Pi which can turn the remote control outlets on and off.
 
 ## Software
 
