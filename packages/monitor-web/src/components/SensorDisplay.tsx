@@ -5,7 +5,7 @@ import mqtt from 'mqtt';
 const brokerAddress = 'ws://192.168.1.115:9001';
 
 interface SensorDisplayState {
-  selectedLocation: string; // 'home/bedroom' | 'home/kitchen/fridge'
+  selectedLocation: string; // 'home/bedroom' | 'home/living_room' | 'home/kitchen/fridge'
   locations: {
     [key: string]: {
       humidity: number;
@@ -23,6 +23,10 @@ export default class SensorDisplay extends Component<{}, SensorDisplayState> {
       selectedLocation: 'home/bedroom',
       locations: {
         'home/bedroom': {
+          humidity: 0,
+          temperature: 0
+        },
+        'home/living_room': {
           humidity: 0,
           temperature: 0
         },
@@ -84,6 +88,7 @@ export default class SensorDisplay extends Component<{}, SensorDisplayState> {
             onChange={this.handleChangeLocation.bind(this)}
           >
             <option value="home/bedroom">home/bedroom</option>
+            <option value="home/living_room">home/living_room</option>
             <option value="home/kitchen/fridge">home/kitchen/fridge</option>
           </select>
         </label>

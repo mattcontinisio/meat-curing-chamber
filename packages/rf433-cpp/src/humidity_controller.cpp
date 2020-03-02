@@ -1,8 +1,8 @@
 #include "mqtt_client.hpp"
 
 #include "INIReader.h"
-#include "cxxopts.hpp"
 
+#include <cxxopts.hpp>
 #include <RCSwitch.h>
 #include <mqtt/client.h>
 #include <spdlog/spdlog.h>
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
 
     while (true) {
         spdlog::info("waiting for message");
-        const auto msg = client.consume_message();
+        const auto msg = client.get().consume_message();
         if (!msg) {
             // todo reconnect
             spdlog::error("invalid message");
