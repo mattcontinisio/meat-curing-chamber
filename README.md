@@ -11,6 +11,7 @@ See [documentation](./doc/design.md) for more info.
 * csv_writer (Python) - Writes humidity and temperature data to CSV file
 * dht (Python) - Publishes humidity and temperature data from Adafruit DHT series sensors
 * metrics (Python) - Exposes metrics with Prometheus
+* monitor_flutter (Dart/Flutter) - Flutter (tested with Android) app that displays humidity and temperature
 * monitor-web (JS) - Web app that displays humidity and temperature
 * rf433-cpp (C++) - Operates 433hz devices, used to turn on/off humidifier and fridge
 * rf433-py (Python) - Operates 433hz devices, used to turn on/off humidifier and fridge
@@ -46,6 +47,15 @@ There is also a build script for convenience.
 
     # Creates _build_release_gcc_make folder
     ./scripts/build_cpp.sh release gcc make
+
+### monitor_flutter
+
+monitor_flutter is a [Flutter](https://flutter.dev/) app that displays the current humidity and temperature data.
+
+    cd packages/monitor_flutter
+
+    # Run app
+    flutter run
 
 ### monitor-web
 
