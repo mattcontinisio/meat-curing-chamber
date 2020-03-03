@@ -112,17 +112,11 @@ class _SensorDisplayState extends State<SensorDisplay> {
               }).toList(),
             ),
             Text(
-              'humidity:',
-            ),
-            Text(
-              '$humidity',
+              'humidity: $humidity %',
               style: Theme.of(context).textTheme.display1,
             ),
             Text(
-              'temperature:',
-            ),
-            Text(
-              '$temperature',
+              'temperature: $temperature °C',
               style: Theme.of(context).textTheme.display1,
             ),
           ],

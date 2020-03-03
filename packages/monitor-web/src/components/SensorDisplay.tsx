@@ -79,6 +79,10 @@ export default class SensorDisplay extends Component<{}, SensorDisplayState> {
   }
 
   render() {
+    const locationData = this.state.locations[this.state.selectedLocation];
+    const humidity = `humidity: ${locationData.humidity.toFixed(2)} %`;
+    const temperature = `temperature: ${locationData.temperature.toFixed(2)} °C`;
+
     return (
       <div className="SensorDisplay">
         <label>
@@ -92,22 +96,8 @@ export default class SensorDisplay extends Component<{}, SensorDisplayState> {
             <option value="home/kitchen/fridge">home/kitchen/fridge</option>
           </select>
         </label>
-        <p>
-          humidity:{' '}
-          {
-            +this.state.locations[this.state.selectedLocation].humidity.toFixed(
-              2
-            )
-          }
-        </p>
-        <p>
-          temperature:{' '}
-          {
-            +this.state.locations[
-              this.state.selectedLocation
-            ].temperature.toFixed(2)
-          }
-        </p>
+        <p>{humidity}</p>
+        <p>{temperature}</p>
       </div>
     );
   }
