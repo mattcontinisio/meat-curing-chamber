@@ -1,5 +1,7 @@
 # Meat curing chamber
 
+[![Build Status](https://github.com/mattcontinisio/meat-curing-chamber/workflows/CI/badge.svg)](https://github.com/mattcontinisio/meat-curing-chamber/actions)
+
 Raspberry Pi meat curing chamber and mini IoT framework
 
 ![alt text](./doc/architecture.png "Architecture")
