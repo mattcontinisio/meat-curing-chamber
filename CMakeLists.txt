@@ -25,6 +25,12 @@ if(BUILD_CXXOPTS)
 endif()
 
 if(BUILD_PAHO_MQTT)
+    set(PAHO_MQTT_C_DEPS_DIR ${meat-curing-chamber_SOURCE_DIR}/deps/paho_mqtt_c)
+    configure_file(${meat-curing-chamber_SOURCE_DIR}/cmake/in/paho_mqtt_c.in ${PAHO_MQTT_C_DEPS_DIR}/CMakeLists.txt)
+    execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" . WORKING_DIRECTORY ${PAHO_MQTT_C_DEPS_DIR})
+    execute_process(COMMAND ${CMAKE_COMMAND} --build . WORKING_DIRECTORY ${PAHO_MQTT_C_DEPS_DIR})
+    add_subdirectory(${PAHO_MQTT_C_DEPS_DIR}/src)
+
     set(PAHO_MQTT_CPP_DEPS_DIR ${meat-curing-chamber_SOURCE_DIR}/deps/paho_mqtt_cpp)
     configure_file(${meat-curing-chamber_SOURCE_DIR}/cmake/in/paho_mqtt_cpp.in ${PAHO_MQTT_CPP_DEPS_DIR}/CMakeLists.txt)
     execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" . WORKING_DIRECTORY ${PAHO_MQTT_CPP_DEPS_DIR})
