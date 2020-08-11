@@ -6,8 +6,7 @@ py_library(
 )
 
 py_binary(
-    name = "csv_writer",
+    name = "csv_writer_main",
     srcs = glob(["csv_writer/**/*.py"]),
     main = "csv_writer.py",
-    deps = ["//packages/config"],
 )

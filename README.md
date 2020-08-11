@@ -16,7 +16,7 @@ See [documentation](./doc/design.md) for more info.
 * monitor_flutter (Dart/Flutter) - Flutter (tested with Android) app that displays humidity and temperature
 * monitor-web (JS) - Web app that displays humidity and temperature
 * rf433-cpp (C++) - Operates 433hz devices, used to turn on/off humidifier and fridge
-* rf433-py (Python) - Operates 433hz devices, used to turn on/off humidifier and fridge
+* rf433_py (Python) - Operates 433hz devices, used to turn on/off humidifier and fridge
 * slack (Python) - Posts messages to slack channel
 
 ## Build
@@ -29,8 +29,10 @@ See [documentation](./doc/design.md) for more info.
 
 Python packages can be built individually.
 
+    mkvirtualenv -p python3 meat-curing-chamber
+
     cd packages/dht/
-    pip3 install .
+    pip install .
 
 ### C++
 
@@ -76,6 +78,8 @@ See the [Readme](./packages/monitor-web/README.md) for more info.
 ### Bazel
 
 work in progress
+
+    bazel build //...
 
 ## Usage
 

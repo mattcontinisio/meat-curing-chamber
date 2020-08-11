@@ -6,8 +6,7 @@ py_library(
 )
 
 py_binary(
-    name = "slack",
+    name = "slack_main",
     srcs = glob(["slack/**/*.py"]),
     main = "slack.py",
-    deps = ["//packages/config"],
 )

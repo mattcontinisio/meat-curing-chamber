@@ -6,8 +6,7 @@ py_library(
 )
 
 py_binary(
-    name = "dht",
+    name = "dht_main",
     srcs = glob(["dht/**/*.py"]),
     main = "dht.py",
-    deps = ["//packages/config"],
 )

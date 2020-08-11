@@ -6,8 +6,7 @@ py_library(
 )
 
 py_binary(
-    name = "metrics",
+    name = "metrics_main",
     srcs = glob(["metrics/**/*.py"]),
     main = "metrics.py",
-    deps = ["//packages/config"],
 )

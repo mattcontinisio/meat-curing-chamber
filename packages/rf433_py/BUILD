@@ -6,15 +6,13 @@ py_library(
 )
 
 py_binary(
-    name = "humidity_controller",
+    name = "humidity_controller_main",
     srcs = glob(["rf433/**/*.py"]),
     main = "humidity_controller.py",
-    deps = ["//packages/config"],
 )
 
 py_binary(
-    name = "temperature_controller",
+    name = "temperature_controller_main",
     srcs = glob(["rf433/**/*.py"]),
     main = "temperature_controller.py",
-    deps = ["//packages/config"],
 )
